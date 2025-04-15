@@ -1,0 +1,440 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOLBC CAMP 2025 - Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .register-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .register-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .form-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header/Navigation -->
+    <header class="bg-blue-900 text-white shadow-lg">
+        <div class="container mx-auto p-4">
+            <nav class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-campground text-2xl"></i>
+                    <span class="text-2xl font-bold">WOLBC CAMP</span>
+                </div>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="{% url 'home' %}" class="hover:text-blue-300 transition">Home</a></li>
+                    <li><a href="#" class="hover:text-blue-300 transition">Events</a></li>
+                    <li><a href="{% url 'register' %}" class="text-yellow-400 font-bold hover:text-yellow-300 transition">Register</a></li>
+                    <li><a href="#" class="hover:text-blue-300 transition">About</a></li>
+                    <li><a href="#" class="hover:text-blue-300 transition">Contact</a></li>
+                </ul>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </nav>
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <ul class="flex flex-col space-y-3">
+                    <li><a href="{% url 'home' %}" class="block hover:text-blue-300 transition">Home</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">Events</a></li>
+                    <li><a href="{% url 'register' %}" class="block text-yellow-400 font-bold hover:text-yellow-300 transition">Register</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">About</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Title Banner -->
+    <div class="bg-gradient-to-r from-blue-800 to-purple-900 text-white py-10">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Register for WOLBC CAMP 2025</h1>
+            <p class="text-lg">Secure your spot for an unforgettable experience!</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden form-card">
+                <div class="md:flex">
+                    <!-- Left Side: Camp Image and Info -->
+                    <div class="bg-blue-900 text-white p-8 md:w-2/5">
+                        <div class="h-full flex flex-col">
+                            <div class="mb-8">
+                                <div class="flex items-center mb-4">
+                                    <i class="fas fa-campground text-3xl mr-3 text-yellow-500"></i>
+                                    <h2 class="text-2xl font-bold">WOLBC CAMP 2025</h2>
+                                </div>
+                                <div class="w-16 h-1 bg-yellow-500 mb-6"></div>
+                                <p class="text-blue-200 mb-6">Join us for an unforgettable experience of growth, fellowship and fun!</p>
+                            </div>
+                            
+                            <div class="space-y-6 flex-grow">
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt mt-1 mr-3 text-yellow-500"></i>
+                                    <span>123 Camp Road, Lagos, Nigeria</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="far fa-calendar-alt mt-1 mr-3 text-yellow-500"></i>
+                                    <span>July 15 - July 22, 2025</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-money-bill-wave mt-1 mr-3 text-yellow-500"></i>
+                                    <span>Registration fee: ₦10,000 only</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-phone-alt mt-1 mr-3 text-yellow-500"></i>
+                                    <span>+234 123 456 7890</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-envelope mt-1 mr-3 text-yellow-500"></i>
+                                    <span>info@wolbccamp.org</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-6 border-t border-blue-800">
+                                <div class="flex space-x-4 justify-center">
+                                    <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Registration Form -->
+                    <div class="p-8 md:w-3/5">
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-blue-900 mb-2">Personal Information</h2>
+                            <p class="text-gray-600">Please fill in your details below to register for the camp</p>
+                        </div>
+                        
+                        {% if form.errors %}
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" role="alert">
+                            <strong class="font-bold">Please correct the errors below.</strong>
+                        </div>
+                        {% endif %}
+                        
+                        {% if messages %}
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <form method="POST" class="space-y-4">
+                            {% csrf_token %}
+                            
+                            <div class="space-y-2">
+                                <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                    </div>
+                                    {{ form.name }}
+                                </div>
+                                {% if form.name.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.name.errors }}</p>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    {{ form.email }}
+                                </div>
+                                {% if form.email.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.email.errors }}</p>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-phone-alt text-gray-400"></i>
+                                    </div>
+                                    {{ form.phone }}
+                                </div>
+                                {% if form.phone.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.phone.errors }}</p>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label for="{{ form.date_of_birth.id_for_label }}" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-calendar-alt text-gray-400"></i>
+                                        </div>
+                                        {{ form.date_of_birth }}
+                                    </div>
+                                    {% if form.date_of_birth.errors %}
+                                        <p class="text-red-500 text-xs mt-1">{{ form.date_of_birth.errors }}</p>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="space-y-2">
+                                    <label for="{{ form.gender.id_for_label }}" class="block text-sm font-medium text-gray-700">Gender</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-venus-mars text-gray-400"></i>
+                                        </div>
+                                        <select name="gender" id="id_gender" class="pl-10 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 form-control">
+                                            <option value="" selected>Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    {% if form.gender.errors %}
+                                        <p class="text-red-500 text-xs mt-1">{{ form.gender.errors }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label for="{{ form.branch.id_for_label }}" class="block text-sm font-medium text-gray-700">Branch</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-church text-gray-400"></i>
+                                        </div>
+                                        {{ form.branch }}
+                                    </div>
+                                    {% if form.branch.errors %}
+                                        <p class="text-red-500 text-xs mt-1">{{ form.branch.errors }}</p>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="space-y-2">
+                                    <label for="{{ form.district.id_for_label }}" class="block text-sm font-medium text-gray-700">District</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-map text-gray-400"></i>
+                                        </div>
+                                        {{ form.district }}
+                                    </div>
+                                    {% if form.district.errors %}
+                                        <p class="text-red-500 text-xs mt-1">{{ form.district.errors }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label for="{{ form.department.id_for_label }}" class="block text-sm font-medium text-gray-700">Department</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-users text-gray-400"></i>
+                                    </div>
+                                    {{ form.department }}
+                                </div>
+                                {% if form.department.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.department.errors }}</p>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="pt-6">
+                                <button type="button" onclick="makePayment()" class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 register-btn">
+                                    <i class="fas fa-user-plus mr-2"></i>Register And Pay 
+                                </button>
+                                <p class="text-center text-gray-500 mt-3 text-sm">Registration fee: ₦10,000 only</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Camp Information -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-suitcase text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">What to Bring</h3>
+                    <p class="text-gray-600">Don't forget to pack comfortable clothes, toiletries, Bible, notepad, and a positive attitude!</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Camp Schedule</h3>
+                    <p class="text-gray-600">We'll have daily devotions, workshops, recreational activities, and evening services.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-question-circle text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Questions?</h3>
+                    <p class="text-gray-600">Contact us at info@wolbccamp.org or call +234 123 456 7890 for any inquiries.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white pt-12 pb-6 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-campground mr-2"></i>WOLBC CAMP
+                    </h3>
+                    <p class="text-blue-200 mb-4">Empowering youth through transformative camp experiences since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Events</a></li>
+                        <li><a href="{% url 'register' %}" class="text-blue-200 hover:text-white transition">Register</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>123 Camp Road, Lagos, Nigeria</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>+234 123 456 7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>info@wolbccamp.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-800 pt-6 text-center">
+                <p class="text-blue-300">&copy; {% now "Y" %} WOLBC CAMP. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date picker for date of birth
+            flatpickr("#id_date_of_birth", {
+                dateFormat: "Y-m-d",
+                maxDate: new Date(),
+                disableMobile: "true"
+            });
+
+            // Phone number validation
+            const phoneInput = document.getElementById('id_phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                    e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+                });
+            }
+
+            // Add Tailwind classes to Django form elements
+            const formElements = document.querySelectorAll('.form-control');
+            formElements.forEach(element => {
+                element.classList.add('w-full', 'rounded-md', 'border-gray-300', 'shadow-sm', 'focus:border-blue-500', 'focus:ring', 'focus:ring-blue-200', 'focus:ring-opacity-50');
+            });
+            
+            // Add padding to form inputs for icons
+            const formInputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], textarea');
+            formInputs.forEach(input => {
+                input.classList.add('pl-10');
+            });
+        });
+    </script>
+    <script src="https://checkout.flutterwave.com/v3.js">
+
+    </script>
+    <script>
+        function makePayment() {
+          FlutterwaveCheckout({
+            public_key: "FLWPUBK-xxxxxxxxxxxxxxxxxxxxxx-X",
+            tx_ref: "ref_" + Date.now(),
+            amount: 5000,
+            currency: "NGN",
+            payment_options: "card, banktransfer",
+            customer: {
+                email: document.querySelector("input[name='email']").value,
+                name: document.querySelector("input[name='name']").value,
+            },
+
+            callback: function (response) {
+              // Inject the transaction_id into a hidden input
+              const form = document.getElementById("registrationForm");
+              let hiddenInput = document.createElement("input");
+              hiddenInput.type = "hidden";
+              hiddenInput.name = "transaction_id";
+              hiddenInput.value = response.transaction_id;
+              form.appendChild(hiddenInput);
+      
+              // Submit the form to Django
+              form.submit();
+            },
+            onclose: function () {
+              alert("Transaction cancelled.");
+            },
+            customizations: {
+              title: "Event Registration",
+              description: "Pay to register",
+              logo: "https://yourlogo.com/logo.png",
+            },
+          });
+        }
+      </script>
+    
+</body>
+</html>

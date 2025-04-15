@@ -1,0 +1,313 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOLBC CAMP 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .register-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .register-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="bg-blue-900 text-white shadow-lg">
+        <div class="container mx-auto p-4">
+            <nav class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-campground text-2xl"></i>
+                    <span class="text-2xl font-bold">WOLBC CAMP</span>
+                </div>
+                <ul class="hidden md:flex space-x-6">
+                    <li><a href="#" class="hover:text-blue-300 transition">Home</a></li>
+                    <li><a href="#" class="hover:text-blue-300 transition">Events</a></li>
+                    <li><a href="{% url 'register' %}" class="hover:text-blue-300 transition">Register</a></li>
+                    <li><a href="{% url 'about' %}" class="hover:text-blue-300 transition">About</a></li>
+                    <li><a href="#" class="hover:text-blue-300 transition">Contact</a></li>
+                </ul>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </nav>
+            <!-- Mobile menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <ul class="flex flex-col space-y-3">
+                    <li><a href="#" class="block hover:text-blue-300 transition">Home</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">Events</a></li>
+                    <li><a href="{% url 'register' %}" class="block hover:text-blue-300 transition">Register</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">About</a></li>
+                    <li><a href="#" class="block hover:text-blue-300 transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-blue-800 to-purple-900 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">WOLBC CAMP 2025</h1>
+            <p class="text-xl md:text-2xl mb-8">Join us for an unforgettable experience of growth, fellowship and fun!</p>
+            <a href="{% url 'register' %}" class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-8 rounded-full inline-block transition register-btn">
+                REGISTER NOW
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 py-12">
+        <section class="mb-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-blue-900">Upcoming Camp Events</h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            
+            {% if events %}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for event in events %}
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md event-card">
+                            <div class="relative">
+                                <img src="{{ event.image.url }}" alt="{{ event.name }}" class="w-full h-64 object-cover">
+                                <div class="absolute top-4 right-4 bg-yellow-500 text-blue-900 font-semibold px-3 py-1 rounded-full text-sm">
+                                    Featured
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-blue-900 mb-2">{{ event.name }}</h3>
+                                <div class="flex items-center text-gray-600 mb-4">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span>{{ event.location }}</span>
+                                </div>
+                                <p class="text-gray-700 mb-4 line-clamp-3">{{ event.description }}</p>
+                                <div class="flex justify-between items-center mb-4 text-sm text-gray-600">
+                                    <div>
+                                        <i class="far fa-calendar-alt mr-1"></i>
+                                        <span>Start: {{ event.start_date|date:"M d, Y" }}</span>
+                                    </div>
+                                    <div>
+                                        <i class="far fa-calendar-check mr-1"></i>
+                                        <span>End: {{ event.end_date|date:"M d, Y" }}</span>
+                                    </div>
+                                </div>
+                                <a href="{% url 'register' %}" class="block text-center bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg transition register-btn">
+                                    <i class="fas fa-user-plus mr-2"></i>REGISTER NOW
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-12">
+                    <i class="fas fa-calendar-times text-6xl text-gray-400 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-600">No events scheduled at this time</h3>
+                    <p class="text-gray-500 mt-2">Please check back later for upcoming events</p>
+                </div>
+            {% endif %}
+        </section>
+        
+        <!-- Camp Features Section -->
+        <section class="mb-12 py-12 bg-gray-100 rounded-2xl px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 text-blue-900">What Makes Our Camp Special</h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Join us for an extraordinary experience filled with activities designed to nurture spiritual growth, leadership skills, and lasting friendships.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-praying-hands text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Spiritual Growth</h3>
+                    <p class="text-gray-600">Daily devotions and teachings to strengthen your faith journey.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Community</h3>
+                    <p class="text-gray-600">Build meaningful relationships with like-minded peers.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hiking text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Adventure</h3>
+                    <p class="text-gray-600">Exciting outdoor activities and team-building exercises.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lightbulb text-2xl text-blue-800"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-blue-900">Leadership</h3>
+                    <p class="text-gray-600">Workshops and activities to develop leadership skills.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Testimonials -->
+    <section class="bg-blue-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">What Past Campers Say</h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-blue-800 p-6 rounded-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+                    <p class="text-center italic mb-6">"The camp transformed my spiritual life. I made friends that will last a lifetime and learned so much about myself."</p>
+                    <div class="text-center">
+                        <h3 class="font-semibold">Sarah Johnson</h3>
+                        <p class="text-blue-300 text-sm">Camp 2024 Attendee</p>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-800 p-6 rounded-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+                    <p class="text-center italic mb-6">"The activities were incredible, but the community and spiritual growth were what really made this camp special."</p>
+                    <div class="text-center">
+                        <h3 class="font-semibold">Michael Thompson</h3>
+                        <p class="text-blue-300 text-sm">Camp 2023 Attendee</p>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-800 p-6 rounded-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                            <i class="fas fa-star text-yellow-500"></i>
+                        </div>
+                    </div>
+                    <p class="text-center italic mb-6">"I've attended many camps, but WOLBC stands out. The leadership training was exceptional, and I'm using those skills today."</p>
+                    <div class="text-center">
+                        <h3 class="font-semibold">Jennifer Adams</h3>
+                        <p class="text-blue-300 text-sm">Camp 2024 Attendee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Registration CTA -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4 text-blue-900">Ready to Join WOLBC CAMP 2025?</h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Secure your spot today for this life-changing experience. Limited spaces available!</p>
+            <a href="{% url 'register' %}" class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-4 px-10 rounded-full inline-block transition register-btn text-lg">
+                <i class="fas fa-user-plus mr-2"></i>REGISTER NOW
+            </a>
+            <p class="mt-4 text-gray-500">Registration fee: ₦10,000 only</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-campground mr-2"></i>WOLBC CAMP
+                    </h3>
+                    <p class="text-blue-200 mb-4">Empowering youth through transformative camp experiences since 2010.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-500 transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Home</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Events</a></li>
+                        <li><a href="{% url 'register' %}" class="text-blue-200 hover:text-white transition">Register</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span>123 Camp Road, Lagos, Nigeria</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span>+234 123 456 7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span>info@wolbccamp.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-800 pt-6 text-center">
+                <p class="text-blue-300">&copy; {% now "Y" %} WOLBC CAMP. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
